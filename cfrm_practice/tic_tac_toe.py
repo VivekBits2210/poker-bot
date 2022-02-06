@@ -1,11 +1,12 @@
-#TODO: Add Typing
+# TODO: Add Typing
 import random
 import numpy as np
+
 
 class Game:
     def __init__(self):
         self.board = [[0] * 3 for _ in range(3)]
-        self.player = 1 # 1 is X, -1 is O
+        self.player = 1  # 1 is X, -1 is O
         self.move_history = []
 
     def play(self, move):
@@ -44,6 +45,7 @@ class Game:
     def pretty_print_board(self):
         return np.matrix(self.board)
 
+
 class Bot:
     def __init__(self, game, strategy):
         self.game = game
@@ -63,8 +65,9 @@ class Bot:
 
     def play(self):
         self.update_candidate_moves()
-        move = self.strategy.get_move(self.candidate_moves)
+        move = self.strategy.get_move(self.game.board, self.candidate_moves)
         return move
+
 
 class GameClient:
     def __init__(self, strategy1, strategy2):
@@ -80,7 +83,7 @@ class GameClient:
             self.game.pretty_print_board()
             winner = self.game.has_won()
             if winner:
-                if winner!=0:
+                if winner != 0:
                     print(f"Game over! Player {winner} wins!")
                 else:
                     print("Game over! It's a draw!")
@@ -90,8 +93,9 @@ class GameClient:
             move = player_object.play()
             validity = self.game.play(self, move)
             if not validity:
-                print(f"Invalid move by player {self.game.player}, "
-                      f"strategy {type(self.player_object_map[self.game.player].strategy)}!")
+                print(
+                    f"Invalid move by player {self.game.player}, "
+                    f"strategy {type(self.player_object_map[self.game.player].strategy)}!")
                 input("Press enter to continue...")
 
 
@@ -99,13 +103,16 @@ class OrdinalStrategy:
     def get_move(self, board, candidate_moves):
         return candidate_moves[0]
 
+
 class RandomStrategy:
     def get_move(self, candidate_moves, board):
         return random.choice(candidate_moves)
 
+
 class CockBlockStrategy:
     def get_move(self, board, candidate_moves):
-        pass #TODO: Fill this in
+        pass  # TODO: Fill this in
+
 
 class UserStrategy:
     def get_move(self, board, candidate_moves):
@@ -119,9 +126,9 @@ class UserStrategy:
         return move
 
 
-
 def main():
-    game = Game()
+    gc = GameClient(OrdinalStrategy, OrdinalStrategy)
+    gc.start()
 
 
 if __name__ == '__main__':
