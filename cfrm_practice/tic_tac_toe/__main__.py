@@ -1,8 +1,8 @@
 import sys
 import os
 
-from .client import GameClient
-from .commandlineparser import CommandLineParser
+from client import GameClient
+from commandlineparser import CommandLineParser
 
 
 def main():

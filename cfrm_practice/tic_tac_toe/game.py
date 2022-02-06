@@ -7,15 +7,28 @@ class Game:
         self.board = [[0] * 3 for _ in range(3)]
         self.player = 1  # 1 is X, -1 is O
         self.move_history = []
+        self.candidate_moves = []
+        self.initialize_candidate_moves()
 
-    def play(self, move: Tuple[int, int]) -> bool:
-        print("Move: {} Player: {}".format(len(self.move_history), self.player))
+    def initialize_candidate_moves(self) -> None:
+        for row in range(3):
+            for col in range(3):
+                if self.board[row][col] == 0:
+                    self.candidate_moves.append((row, col))
+
+    def update_candidate_moves(self) -> None:
+        self.candidate_moves.remove(self.move_history[-1])
+
+    def play(self, move: Tuple[int, int], *, subdue: bool = False) -> bool:
+        if not subdue:
+            print("Move: {} Player: {}".format(len(self.move_history), self.player))
         row, col = move
         if self.board[row][col] != 0:
             return False
         self.board[row][col] = self.player
         self.player = -self.player
         self.move_history.append((row, col))
+        self.update_candidate_moves()
         return True
 
     def has_won(self) -> Union[int, None]:
@@ -53,3 +66,14 @@ class Game:
 
     def pretty_print_board(self) -> None:
         print(np.matrix(self.board))
+
+    def get_hash(self, board=None) -> str:
+        if board is None:
+            board = self.board
+
+        game_hash = ""
+        for row in board:
+            for col in range(3):
+                cell = row[col]
+                game_hash += "x" if cell == 1 else ("o" if cell == -1 else "-")
+        return game_hash

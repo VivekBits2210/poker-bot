@@ -1,12 +1,10 @@
 from abc import ABC, abstractmethod
-from typing import Sequence, Tuple
+from typing import Tuple
 
-from ..game import Game
+from cfrm_practice.tic_tac_toe.game import Game
 
 
 class Strategy(ABC):
     @abstractmethod
-    def get_move(
-        self, game: Game, candidate_moves: Sequence[Tuple[int, int]]
-    ) -> Tuple[int, int]:
+    def get_move(self, game: Game) -> Tuple[int, int]:
         pass

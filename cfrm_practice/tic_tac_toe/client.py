@@ -1,8 +1,5 @@
-from typing import Callable
-
-from .bot import Bot
-from .game import Game
-from .strategies.strategy_registry import StrategyEnum
+from game import Game
+from strategies.strategy_registry import StrategyEnum
 
 
 class GameClient:
@@ -10,9 +7,7 @@ class GameClient:
         self.game = Game()
         self.strategy1 = StrategyEnum[strategy1].strategy()
         self.strategy2 = StrategyEnum[strategy2].strategy()
-        self.player1 = Bot(self.game, self.strategy1)
-        self.player2 = Bot(self.game, self.strategy2)
-        self.player_object_map = {1: self.player1, -1: self.player2}
+        self.player_object_map = {1: self.strategy1, -1: self.strategy2}
         self.state = None
 
     def start(self) -> None:
@@ -27,11 +22,11 @@ class GameClient:
                 break
 
             player_object = self.player_object_map[self.game.player]
-            move = player_object.play()
+            move = player_object.get_move(self.game)
             validity = self.game.play(move)
             if validity is False:
                 print(
                     f"Invalid move by player {self.game.player}, move {move}, "
-                    f"strategy {str(type(self.player_object_map[self.game.player].strategy)).split('.')[-1]}!"
+                    f"strategy {str(type(player_object))}!"
                 )
                 input("Press enter to continue...")

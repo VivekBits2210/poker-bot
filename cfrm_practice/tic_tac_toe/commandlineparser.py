@@ -1,6 +1,6 @@
 import argparse
 
-from .strategies.strategy_registry import StrategyEnum
+from strategies.strategy_registry import StrategyEnum
 
 
 class CommandLineParser:
