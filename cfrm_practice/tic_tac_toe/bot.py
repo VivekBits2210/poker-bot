@@ -26,5 +26,5 @@ class Bot:
 
     def play(self) -> Tuple[int, int]:
         self.update_candidate_moves()
-        move = self.strategy.get_move(self.game.board, self.candidate_moves)
+        move = self.strategy.get_move(self.game, self.candidate_moves)
         return move

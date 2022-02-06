@@ -2,13 +2,14 @@ from typing import Callable
 
 from .bot import Bot
 from .game import Game
+from .strategies.strategy_registry import StrategyEnum
 
 
 class GameClient:
-    def __init__(self, strategy1: Callable, strategy2: Callable) -> None:
+    def __init__(self, strategy1: str, strategy2: str) -> None:
         self.game = Game()
-        self.strategy1 = strategy1()
-        self.strategy2 = strategy2()
+        self.strategy1 = StrategyEnum[strategy1].strategy()
+        self.strategy2 = StrategyEnum[strategy2].strategy()
         self.player1 = Bot(self.game, self.strategy1)
         self.player2 = Bot(self.game, self.strategy2)
         self.player_object_map = {1: self.player1, -1: self.player2}

@@ -1,9 +1,10 @@
-from tic_tac_toe.client import GameClient
-from tic_tac_toe.strategies.strategy_trivial import RandomStrategy
+from .client import GameClient
+from .commandlineparser import CommandLineParser
 
 
 def main():
-    gc = GameClient(RandomStrategy, RandomStrategy)
+    arguments = CommandLineParser.parse()
+    gc = GameClient(arguments.player1, arguments.player2)
     gc.start()
 
 

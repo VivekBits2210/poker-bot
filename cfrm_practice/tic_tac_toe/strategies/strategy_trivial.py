@@ -40,12 +40,12 @@ class CockBlockStrategy(Strategy):
         return random.choice(candidate_moves)
 
 
-class UserStrategy(Strategy):
+class HumanStrategy(Strategy):
     def get_move(
         self, game: Game, candidate_moves: Sequence[Tuple[int, int]]
     ) -> Tuple[int, int]:
         while True:
-            row, column = tuple(input("Enter a move: ").split(""))
+            row, column = tuple(input("Enter a move: ").split(" "))
             move = int(row), int(column)
             if move not in candidate_moves:
                 print(f"Invalid move, pick from candidates: {candidate_moves}")
