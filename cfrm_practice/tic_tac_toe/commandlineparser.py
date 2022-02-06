@@ -23,4 +23,11 @@ class CommandLineParser:
             choices=[e.name for e in StrategyEnum],
             default="RANDOM",
         )
+        parser.add_argument(
+            "-i",
+            "--iterations",
+            type=int,
+            help="Number of iterations",
+            default=1,
+        )
         return parser.parse_args()

@@ -13,14 +13,15 @@ class GameClient:
         self.player1 = Bot(self.game, self.strategy1)
         self.player2 = Bot(self.game, self.strategy2)
         self.player_object_map = {1: self.player1, -1: self.player2}
+        self.state = None
 
     def start(self) -> None:
         while True:
             self.game.pretty_print_board()
-            winner = self.game.has_won()
-            if winner is not None:
-                if winner != 0:
-                    print(f"Game over! Player {winner} wins!")
+            self.state = self.game.has_won()
+            if self.state is not None:
+                if self.state != 0:
+                    print(f"Game over! Player {self.state} wins!")
                 else:
                     print("Game over! It's a draw!")
                 break
