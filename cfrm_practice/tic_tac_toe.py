@@ -14,7 +14,7 @@ class Game:
         if self.board[row][col] != 0:
             return False
         self.board[row][col] = self.player
-        self.player = - self.player
+        self.player = -self.player
         self.move_history.append((row, col))
         return True
 
@@ -26,13 +26,22 @@ class Game:
 
         # Check columns
         for col in range(3):
-            if self.board[0][col] != 0 and self.board[0][col] == self.board[1][col] == self.board[2][col]:
+            if (
+                self.board[0][col] != 0
+                and self.board[0][col] == self.board[1][col] == self.board[2][col]
+            ):
                 return self.board[0][col]
 
         # Check diagonals
-        if self.board[0][0] != 0 and self.board[0][0] == self.board[1][1] == self.board[2][2]:
+        if (
+            self.board[0][0] != 0
+            and self.board[0][0] == self.board[1][1] == self.board[2][2]
+        ):
             return self.board[0][0]
-        if self.board[0][2] != 0 and self.board[0][2] == self.board[1][1] == self.board[2][0]:
+        if (
+            self.board[0][2] != 0
+            and self.board[0][2] == self.board[1][1] == self.board[2][0]
+        ):
             return self.board[0][2]
 
         # Check if game is a draw
@@ -95,7 +104,8 @@ class GameClient:
             if not validity:
                 print(
                     f"Invalid move by player {self.game.player}, "
-                    f"strategy {type(self.player_object_map[self.game.player].strategy)}!")
+                    f"strategy {type(self.player_object_map[self.game.player].strategy)}!"
+                )
                 input("Press enter to continue...")
 
 
@@ -117,7 +127,7 @@ class CockBlockStrategy:
 class UserStrategy:
     def get_move(self, board, candidate_moves):
         while True:
-            row, column = tuple(input("Enter a move: ").split(''))
+            row, column = tuple(input("Enter a move: ").split(""))
             move = int(row), int(column)
             if move not in candidate_moves:
                 print(f"Invalid move, pick from candidates: {candidate_moves}")
@@ -131,5 +141,5 @@ def main():
     gc.start()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
