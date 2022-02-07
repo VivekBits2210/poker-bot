@@ -5,8 +5,8 @@ from strategies.strategy_registry import StrategyEnum
 class GameClient:
     def __init__(self, strategy1: str, strategy2: str) -> None:
         self.game = Game()
-        self.strategy1 = StrategyEnum[strategy1].strategy()
-        self.strategy2 = StrategyEnum[strategy2].strategy()
+        self.strategy1 = StrategyEnum[strategy1].strategy()()
+        self.strategy2 = StrategyEnum[strategy2].strategy()()
         self.player_object_map = {1: self.strategy1, -1: self.strategy2}
         self.state = None
 

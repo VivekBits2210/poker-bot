@@ -1,3 +1,4 @@
+import os
 import pickle
 from typing import Tuple
 
@@ -10,7 +11,14 @@ class CFRMStrategy(Strategy):
     def __init__(self) -> None:
         self.game = None
         try:
-            with open("./models/cfrm_model.pkl", "rb") as f:
+            with open(
+                os.path.join(
+                    os.path.dirname(__file__),
+                    "models",
+                    "cfrm_model.pkl",
+                ),
+                "rb",
+            ) as f:
                 node_map = pickle.load(f)
             self.node_map = node_map
         except (pickle.PickleError, FileNotFoundError) as e:
@@ -21,4 +29,7 @@ class CFRMStrategy(Strategy):
         game_hash = game.get_hash()
         player_symbol = "x" if game.player == 1 else "o"
         node = self.node_map[f"{player_symbol}:{game_hash}"]
-        return node.strategy.argmax()
+        one_dim_index = node.strategy.argmax()
+        row_index = one_dim_index // 3
+        col_index = one_dim_index % 3
+        return (row_index, col_index)

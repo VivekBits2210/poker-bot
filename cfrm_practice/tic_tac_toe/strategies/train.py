@@ -1,5 +1,8 @@
+import os
 import copy
 import pickle
+from typing import Sequence, Tuple
+
 import numpy as np
 
 from cfrm_practice.tic_tac_toe.game import Game
@@ -9,14 +12,16 @@ node_map = {}
 
 
 class Node:
-    def __init__(self):
+    def __init__(self) -> None:
         self.infoSet = ""
 
         self.regret_sum = np.zeros(ACTION_SPACE_SIZE)
         self.strategy = np.zeros(ACTION_SPACE_SIZE)
         self.strategy_sum = np.zeros(ACTION_SPACE_SIZE)
 
-    def get_strategy(self, realization_weight, candidates):
+    def get_strategy(
+        self, realization_weight: int, candidates: Sequence[Tuple[int, int]]
+    ) -> np.ndarray:
         num_actions = len(candidates)
         normalizingSum = 0
         for a in candidates:
@@ -41,7 +46,7 @@ class Node:
 
 
 # Train TIC TAC TOE
-def train(game_iterations):
+def train(game_iterations: int) -> None:
     game = Game()
     util = 0
     for i in range(game_iterations):
@@ -52,7 +57,7 @@ def train(game_iterations):
 
 
 # Counterfactual regret minimization iteration
-def cfr(game, p0, p1):
+def cfr(game: Game, p0: int, p1: int) -> int:
     player = game.player
     game_state = game.has_won()
     if game_state is not None:
@@ -101,10 +106,13 @@ def cfr(game, p0, p1):
 # 10 iterations approx 5min
 # 100 iterations approx 30min
 # 1000 iterations approx 4h30min
-def create_model():
-    iterations = 10
+def create_model() -> dict:
+    iterations = 200
     print("iterations =", iterations)
     train(iterations)
-    with open("./models/cfrm_model.pkl") as f:
+    with open(
+        os.path.join(os.path.dirname(__file__), "models", "cfrm_model.pkl"),
+        "wb",
+    ) as f:
         pickle.dump(node_map, f)
     return node_map

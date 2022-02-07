@@ -1,6 +1,8 @@
+# TODO: CFR Help: https://github.com/IanSullivan/PokerCFR
 # TODO: Implement CFRM for tic tac toe https://colab.research.google.com/drive/1SYNxGdR7UmoxbxY-NSpVsKywLX7YwQMN?usp=sharing
 # TODO: Watch Yannic video https://www.youtube.com/watch?v=BhUWvQmLzSk
 # TODO: Implement CFRM for rock paper scissors
+# TODO: Implement Kuhn poker
 # TODO: (sidenote) Learn typing module for python
 # TODO: (sidenote) How to make my python module directly callable from command line
 # TODO: Get frequency of betting and differences in strategies etc in noob poker games

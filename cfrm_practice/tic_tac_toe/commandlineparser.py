@@ -5,7 +5,7 @@ from strategies.strategy_registry import StrategyEnum
 
 class CommandLineParser:
     @staticmethod
-    def parse():
+    def parse() -> argparse.Namespace:
         parser = argparse.ArgumentParser(description="Tic Tac Toe")
         parser.add_argument(
             "-p1",
